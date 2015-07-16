@@ -7,10 +7,35 @@
       console.log(data);
       //socket.emit('my other event', { my: 'data' });
     });
+
+    function addMessage(e){
+      //e.preventDefault();
+
+      var payload = {
+        content:{
+          text:document.getElementById("message").value,
+        },
+        sender:document.getElementById("username").value,
+        ts:Date.now()
+      };
+      console.log("adding message",payload);
+
+      return false;
+    }
   </script>
 </head>
 <body>
   <h1>
     Socket.io App
   </h1>
+  <form class="" onsubmit="return addMessage(this)">
+      <!-- <button type="submit" name="button">Add a new message</button> -->
+      <div class="username">
+          <input type="text" id=username placeholder="Your name" value=Guest>
+      </div>
+      <div class="message">
+        <input type="text" id="message" placeholder="enter a message" value="">
+      </div>
+      <input type="submit" name="name" value="Submit">
+  </form>
 </body>
