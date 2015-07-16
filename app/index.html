@@ -1,5 +1,13 @@
 <head>
-
+  <script type="text/javascript" src='/socket.io/socket.io.js'>
+  </script>
+  <script type="text/javascript">
+    var socket = io.connect('http://localhost');
+    socket.on('messages', function (data) {
+      console.log(data);
+      //socket.emit('my other event', { my: 'data' });
+    });
+  </script>
 </head>
 <body>
   <h1>
