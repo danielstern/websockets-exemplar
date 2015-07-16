@@ -1,10 +1,13 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-app.get('/',function(req,res){
-  res.send("Hello, world!");
-});
+// app.get('/',function(req,res){
+//   res.sendFile(__dirname +'/app/index.html',{root:'../'});
+// });
+
+app.use('/',express.static('app'));
 app.listen(80);
 
 io.on('connection',function(socket){
