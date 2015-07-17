@@ -4,8 +4,10 @@ socket.on('messages', function (data) {
   var html = data.map(function(d){
     return (`
       <div class=message>
-        <span>${d.sender}:</span>
-        <span>${d.content.text}</span>
+        <span>
+          ${d.sender}:
+        </span>
+        ${d.content.text}
       </div>
     `)
   }).join(" ");
