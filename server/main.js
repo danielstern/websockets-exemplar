@@ -14,7 +14,6 @@ var messages = [{
   content:{
     text:"The stone tree of the Stonetrees.",
     link:"http://awoiaf.westeros.org/index.php/House_Stonetree"
-    /*AFFC : 227 */
   },
   likedBy:[1],
   ts:Date.now() - 10000
@@ -41,10 +40,8 @@ var messages = [{
 }];
 
 io.on('connection',function(socket){
-  console.info("User connected");
   socket.emit('messages',messages);
   socket.on('new-message', function (data) {
-    console.log('New Message',data.content.text);
     messages.push(data);
     io.sockets.emit('messages',messages);
   });
@@ -56,10 +53,8 @@ io.on('connection',function(socket){
     })[0];
 
     message.likedBy = data.likedBy;
-    console.log('update message',messages);
     io.sockets.emit('messages',messages);
-    //io.sockets.emit('messages',[message]);
   });
 })
 
-console.log("Server listening on port 80");
+console.info("Server listening on port 80");

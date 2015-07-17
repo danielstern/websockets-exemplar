@@ -10,10 +10,7 @@ var messagesCache;
 var socket = io.connect('http://localhost',{'forceNew': true});
 socket.on('messages', function (data) {
   messagesCache = data;
-  console.warn(data);
-
   render();
-
   message.value = "";
   linkAddress.value = "";
 });
@@ -50,8 +47,6 @@ function likeMessage(message){
   } else {
     message.likedBy.splice(index,1);
   }
-
-  console.info("Liking message",message);
 
   socket.emit("update-message",message);
   render();
