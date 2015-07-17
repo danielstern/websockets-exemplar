@@ -1,15 +1,29 @@
-var userId = localStorage.getItem("userId") || Math.random() * 1e12;
+
+var userId = localStorage.getItem("userId") || randomId();
 localStorage.setItem("userId",userId);
+
+function randomId(){
+  return Math.floor(Math.random() * 1e12);
+}
 
 var messagesCache;
 var socket = io.connect('http://localhost',{'forceNew': true});
 socket.on('messages', function (data) {
   messagesCache = data;
-  var html = data.sort(function(a,b){
+  console.warn(data);
+
+  render();
+
+  message.value = "";
+  linkAddress.value = "";
+});
+
+function render(){
+  var html = messagesCache.sort(function(a,b){
     return a.ts - b.ts;
   }).map(function(d,i){
     return (`
-      <div class=message>
+      <form class=message onsubmit="return likeMessage(messagesCache[${i}])">
         <div class='name'>
           ${d.userName}:
         </div>
@@ -18,20 +32,30 @@ socket.on('messages', function (data) {
         <div class='time'>
            ${moment(d.ts).fromNow()}
         </div>
-        <div class='likes-count' onclick='likeMessage(_messages[${i}])'>
-           ${d.likedBy.length} Hearts
-        </div>
-      </div>
+        <input type=submit class='likes-count' value="${d.likedBy.length} Hearts">
+
+        </button>
+      </form>
     `)
   }).join(" ");
 
-  messages.innerHTML = html;
-  message.value = "";
-  linkAddress.value = "";
-});
+  document.getElementById('messages').innerHTML = html;
+}
 
-function likeMessage(d){
-  console.info("Liking message",d);
+function likeMessage(message){
+
+  var index = message.likedBy.indexOf(userId);
+  if (index < 0) {
+    message.likedBy.push(userId);
+  } else {
+    message.likedBy.splice(index,1);
+  }
+
+  console.info("Liking message",message);
+
+  socket.emit("update-message",message);
+  render();
+  return false;
 }
 
 function addMessage(e){
@@ -40,6 +64,7 @@ function addMessage(e){
       text:document.getElementById("message").value,
       link:document.getElementById("linkAddress").value,
     },
+    messageId:randomId(),
     userName:document.getElementById("username").value,
     userId:userId,
     likedBy:[],

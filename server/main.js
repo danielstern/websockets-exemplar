@@ -9,6 +9,7 @@ server.listen(80);
 
 var messages = [{
   userId:1,
+  messageId:10,
   userName:"Asha Greyjoy",
   content:{
     text:"The stone tree of the Stonetrees.",
@@ -19,6 +20,7 @@ var messages = [{
   ts:Date.now() - 10000
 },{
   userId:2,
+  messageId:11,
   userName:"Arya Stark",
   content:{
     text:"We'll come see this inn.",
@@ -28,6 +30,7 @@ var messages = [{
   ts:Date.now() - 100000
 },{
   userId:3,
+  messageId:14,
   userName:"Cersei Lannister",
   content:{
     text:"Her scheming forced this on me.",
@@ -44,6 +47,18 @@ io.on('connection',function(socket){
     console.log('New Message',data.content.text);
     messages.push(data);
     io.sockets.emit('messages',messages);
+  });
+
+  socket.on('update-message', function (data) {
+
+    var message = messages.filter(function(a){
+      return a.messageId == data.messageId;
+    })[0];
+
+    message.likedBy = data.likedBy;
+    console.log('update message',messages);
+    io.sockets.emit('messages',messages);
+    //io.sockets.emit('messages',[message]);
   });
 })
 

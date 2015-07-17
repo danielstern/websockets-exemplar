@@ -40,7 +40,7 @@ textarea {
   height: 6em;
 }
 
-input[type=submit] {
+.sendMessageButton  {
   padding: 0.5em;
   font-size: 1em;
   background-color:#0074D9;
