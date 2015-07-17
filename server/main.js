@@ -10,15 +10,15 @@ server.listen(80);
 var messages = [{
   sender:"Jack Burton",
   content:{text:"Everybody relax, I'm here."},
-  ts:0
+  ts:Date.now() - 10000
 },{
   sender:"Jake Gittes",
   content:{text:"You're dumber than you think I think you are."},
-  ts:100
+  ts:Date.now() - 100000
 },{
   sender:"Zachariah Rigby",
   content:{text:"You think I'm not serious just because I carry a rabbit?"},
-  ts:100
+  ts:Date.now() - 1000000
 }];
 
 io.on('connection',function(socket){

@@ -7,7 +7,12 @@ socket.on('messages', function (data) {
         <span>
           ${d.sender}:
         </span>
-        ${d.content.text}
+        <span>
+          ${d.content.text}
+        </span>
+        <span>
+          ${moment(d.ts).fromNow()}
+        </span>
       </div>
     `)
   }).join(" ");
