@@ -1,12 +1,13 @@
 var userId = localStorage.getItem("userId") || Math.random() * 1e12;
 localStorage.setItem("userId",userId);
 
+var messagesCache;
 var socket = io.connect('http://localhost',{'forceNew': true});
 socket.on('messages', function (data) {
-
+  messagesCache = data;
   var html = data.sort(function(a,b){
     return a.ts - b.ts;
-  }).map(function(d){
+  }).map(function(d,i){
     return (`
       <div class=message>
         <div class='name'>
@@ -17,6 +18,9 @@ socket.on('messages', function (data) {
         <div class='time'>
            ${moment(d.ts).fromNow()}
         </div>
+        <div class='likes-count' onclick='likeMessage(_messages[${i}])'>
+           ${d.likedBy.length} Hearts
+        </div>
       </div>
     `)
   }).join(" ");
@@ -25,6 +29,10 @@ socket.on('messages', function (data) {
   message.value = "";
   linkAddress.value = "";
 });
+
+function likeMessage(d){
+  console.info("Liking message",d);
+}
 
 function addMessage(e){
   var payload = {
