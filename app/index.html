@@ -1,34 +1,18 @@
 <head>
-  <script type="text/javascript" src='/socket.io/socket.io.js'>
-  </script>
-  <script type="text/javascript">
-    var socket = io.connect('http://localhost',{'forceNew': true});
-    socket.on('messages', function (data) {
-      console.log(data);
-      //socket.emit('my other event', { my: 'data' });
-    });
+  <script type="text/javascript" src='/socket.io/socket.io.js'></script>
+  <script type="text/javascript" src='/bower_components/lodash/lodash.js'>  </script>
+  <script type="text/javascript" src='/bower_components/jquery/dist/jquery.js'>  </script>
+  <script type="text/javascript" src="/main.js">
 
-    function addMessage(e){
-
-      var payload = {
-        content:{
-          text:document.getElementById("message").value,
-        },
-        sender:document.getElementById("username").value,
-        ts:Date.now()
-      };
-
-      console.info("adding message",payload);
-      socket.emit("new-message",payload)
-
-      return false;
-    }
   </script>
 </head>
 <body>
   <h1>
     Socket.io App
   </h1>
+  <div id=messages>
+
+  </div>
   <form class="" onsubmit="return addMessage(this)">
       <!-- <button type="submit" name="button">Add a new message</button> -->
       <div class="username">
