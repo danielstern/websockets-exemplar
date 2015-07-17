@@ -1,16 +1,18 @@
 var socket = io.connect('http://localhost',{'forceNew': true});
 socket.on('messages', function (data) {
 
-  var html = data.map(function(d){
+  var html = data.sort(function(a,b){
+    return a.ts - b.ts;
+  }).map(function(d){
     return (`
       <div class=message>
-        <span>
+        <span class='name'>
           ${d.sender}:
         </span>
-        <span>
+        <span class='message'>
           ${d.content.text}
         </span>
-        <span>
+        <span class='time'>
           ${moment(d.ts).fromNow()}
         </span>
       </div>
@@ -18,6 +20,7 @@ socket.on('messages', function (data) {
   }).join(" ");
 
   messages.innerHTML = html;
+  message.value = "";
 
 });
 

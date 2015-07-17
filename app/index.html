@@ -3,14 +3,17 @@
   <script type="text/javascript" src='/bower_components/moment/min/moment.min.js'>  </script>
   <script type="text/javascript" src='/bower_components/jquery/dist/jquery.js'>  </script>
   <script type="text/javascript" src="/main.js">
-
   </script>
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,300italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="main.css">
+
+
 </head>
 <body>
   <h1>
-    Socket.io App
+    Chatacular
   </h1>
-  <div id=messages>
+  <div id=messages class=messages>
 
   </div>
   <form class="" onsubmit="return addMessage(this)">
@@ -19,8 +22,8 @@
           <input type="text" id=username placeholder="Your name" value=Guest required>
       </div>
       <div class="message">
-        <input type="text" id="message" placeholder="Enter a message" value="" required>
+        <textarea type="text" id="message" placeholder="Enter a message" value="" required></textarea>
       </div>
-      <input type="submit" name="name" value="Submit">
+      <input type="submit" name="name" value="Send!">
   </form>
 </body>
