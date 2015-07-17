@@ -1,9 +1,14 @@
 var socket = io.connect('http://localhost',{'forceNew': true});
 socket.on('messages', function (data) {
 
-  var html = `${data.map(function(d){
-    return `<div>${d.sender} : ${d.content.text}</div>`
-  }).join(" ")}`;
+  var html = data.map(function(d){
+    return (`
+      <div class=message>
+        <span>${d.sender}:</span>
+        <span>${d.content.text}</span>
+      </div>
+    `)
+  }).join(" ");
 
   messages.innerHTML = html;
 
