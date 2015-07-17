@@ -8,16 +8,32 @@ app.use('/bower_components',express.static('bower_components'));
 server.listen(80);
 
 var messages = [{
-  sender:"Jack Burton",
-  content:{text:"Everybody relax, I'm here."},
+  userId:1,
+  userName:"Asha Greyjoy",
+  content:{
+    text:"The stone tree of the Stonetrees.",
+    link:"http://awoiaf.westeros.org/index.php/House_Stonetree"
+    /*AFFC : 227 */
+  },
+  likedBy:[1],
   ts:Date.now() - 10000
 },{
-  sender:"Jake Gittes",
-  content:{text:"You're dumber than you think I think you are."},
+  userId:2,
+  userName:"Arya Stark",
+  content:{
+    text:"We'll come see this inn.",
+    link:"http://gameofthrones.wikia.com/wiki/Inn_at_the_Crossroads"
+  },
+  likedBy:[2,3],
   ts:Date.now() - 100000
 },{
-  sender:"Zachariah Rigby",
-  content:{text:"You think I'm not serious just because I carry a rabbit?"},
+  userId:3,
+  userName:"Cersei Lannister",
+  content:{
+    text:"Her scheming forced this on me.",
+    link:"http://gameofthrones.wikia.com/wiki/Margaery_Tyrell"
+  },
+  likedBy:[],
   ts:Date.now() - 1000000
 }];
 
