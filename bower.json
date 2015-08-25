@@ -1,0 +1,16 @@
+{
+  "name": "websocket-exemplar",
+  "version": "0.0.0",
+  "homepage": "https://github.com/danielstern/websockets-exemplar",
+  "authors": [
+    "Code Whisperer <daniel@danielstern.ca>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
