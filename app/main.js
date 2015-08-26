@@ -19,7 +19,7 @@ socket.on("messages", function(data){
 });
 
 function addMessage(e){
-    var payload:{
+    var payload = {
         userName:document.getElementById("username").value,
         content: {
             text:document.getElementById("message").value,
@@ -27,5 +27,7 @@ function addMessage(e){
         },
         ts: Date.now()
     }
+    
+    socket.emit("new-message",payload);
     return false;
 }
