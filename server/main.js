@@ -5,6 +5,7 @@ var io = require('socket.io')(server);
 
 
 app.use(express.static('app'));
+app.use('/bower_components',express.static('bower_components'));
 
 var messages = [{
   userId:1,
