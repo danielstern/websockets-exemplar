@@ -45,7 +45,17 @@ io.on('connection',function(socket){
     socket.on("new-message",function(data){
         messages.push(data);
         io.sockets.emit("messages",messages);
-    })
+    });
+    
+    socket.on("update-message",function(data){
+        var message = messages.filter(function(message){
+            return message.messageId == data.messageId;
+        })[0];
+        
+        message.likedBy = data.likedBy;
+        console.info("updated message...",message);
+        io.sockets.emit("messages",messages);
+    });
 })
 
 server.listen(80);

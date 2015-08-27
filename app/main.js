@@ -1,9 +1,27 @@
+var userId = localStorage.getItem("userId") || randomId();
+localStorage.setItem("userId",userId);
+console.info("Hi I'm user #" + userId);
+var messageCache;
+
+function randomId(){
+    return Math.floor(Math.random() * 1e11);
+}
+
 var socket = io.connect('http://localhost',{'forceNew':true});
 socket.on("messages", function(data){
     console.info(data);
+    messageCache = data;
+    render();
+   
     
-    var html = data.map(function(data){
+    
+});
+
+function render(){
+    var data = messageCache;
+     var html = data.map(function(data,index){
         return (`
+        <form class="message" onsubmit="return likeMessage(messageCache[${index}])">
             <div class='name'>
                 ${data.userName}
             </div>
@@ -11,16 +29,30 @@ socket.on("messages", function(data){
                 ${data.content.text}
             </a>
             <input type=submit class="likes-count" value="${data.likedBy.length} Likes">
+        </form>
         `)
     }).join(" ");
     
     document.getElementById("messages").innerHTML = html;
+}
+
+function likeMessage(message){
     
+    var index = message.likedBy.indexOf(userId);
+    if (index < 0){
+        message.likedBy.push(userId);
+    } else {
+        message.likedBy.splice(index,1);
+    }
     
-});
+    socket.emit("update-message",message);
+    render();
+    return false;
+}
 
 function addMessage(e){
     var payload = {
+        messageId:randomId(),
         userName:document.getElementById("username").value,
         content: {
             text:document.getElementById("message").value,
